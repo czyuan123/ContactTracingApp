@@ -178,41 +178,39 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         loc["City"] = city
         database.collection("User").document("Location").set(loc)
 
-        val docRef = database.collection("User").document("Zone")
-        docRef.get()
+        val docRefUser = database.collection("User").document("Zone")
+        docRefUser.get()
             .addOnSuccessListener { document ->
                 val markerOptions = MarkerOptions().position(latLng)
                 if (document != null) {
-                    val reda: List<String> = document.get("Red") as List<String>
-                    val yellowa: List<String> = document.get("Yellow") as List<String>
-                    for (x in reda){
-                        if (x == city){
+                    val red_zone = document["Red"] as List<Map<String, Any>>
+                    val yellow_zone = document["Yellow"] as List<Map<String, Any>>
+
+                    for (x in red_zone){
+                        val xcity = x.get("City")
+                        val xcases = x.get("Cases")
+                        if (xcity == city){
                             redcheck = 1
-                            Log.d("zone", "redcheck: ${redcheck}")
                             if (redcheck == 1){
-                                mMap.addMarker((markerOptions).draggable(true).title("Red Zone").snippet("${city}").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))).showInfoWindow()
+                                mMap.addMarker((markerOptions).title("Red Zone").snippet("${xcases} active cases in ${city}").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))).showInfoWindow()
                                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
                                 redcheck = 0
                                 citycheck++
                             }
                         }
-                        else {
-                            Log.d("exist", "citycheck: ${citycheck}")
-                        }
                     }
-                    for (x in yellowa) {
-                        if (x == city) {
+
+                    for (x in yellow_zone) {
+                        val xcity = x.get("City")
+                        val xcases = x.get("Cases")
+                        if (xcity == city){
                             yellowcheck = 1
-                            Log.d("zone", "yellowcheck: ${yellowcheck}")
-                            if (yellowcheck == 1) {
-                                mMap.addMarker((markerOptions).draggable(true).title("Yellow Zone").snippet("${city}").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))).showInfoWindow()
+                            if (yellowcheck == 1){
+                                mMap.addMarker((markerOptions).title("Yellow Zone").snippet("${xcases} active cases in ${city}").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))).showInfoWindow()
                                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
                                 yellowcheck = 0
                                 citycheck++
                             }
-                        }
-                        else{
-                            Log.d("exist", "citycheck: ${citycheck}")
                         }
                     }
 
@@ -221,7 +219,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     Log.d("dontexist", "No such document")
                 }
                 if (citycheck == 0){
-                    mMap.addMarker((markerOptions).title("Green Zone").draggable(true).snippet("${city}").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))).showInfoWindow()
+                    mMap.addMarker((markerOptions).title("Green Zone").snippet("No active cases in ${city}").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))).showInfoWindow()
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
                 }
             }
