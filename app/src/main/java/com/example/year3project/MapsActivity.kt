@@ -22,6 +22,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.maps.android.heatmaps.WeightedLatLng
+import org.json.JSONArray
 import java.util.*
 
 
@@ -183,33 +185,32 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             .addOnSuccessListener { document ->
                 val markerOptions = MarkerOptions().position(latLng)
                 if (document != null) {
-                    val red_zone = document["Red"] as List<Map<String, Any>>
-                    val yellow_zone = document["Yellow"] as List<Map<String, Any>>
+                    val jsonData = getJsonDataFromAsset("city_cases.json")
+                    jsonData?.let {
+                        for (i in 0 until it.length()) {
+                            val entry = it.getJSONObject(i)
+                            val cases = entry.getInt("Cases")
+                            val xcity = entry.getString("City")
 
-                    for (x in red_zone){
-                        val xcity = x.get("City")
-                        val xcases = x.get("Cases")
-                        if (xcity == city){
-                            redcheck = 1
-                            if (redcheck == 1){
-                                mMap.addMarker((markerOptions).title("Red Zone").snippet("${xcases} active cases in ${city}").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))).showInfoWindow()
-                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-                                redcheck = 0
-                                citycheck++
-                            }
-                        }
-                    }
-
-                    for (x in yellow_zone) {
-                        val xcity = x.get("City")
-                        val xcases = x.get("Cases")
-                        if (xcity == city){
-                            yellowcheck = 1
-                            if (yellowcheck == 1){
-                                mMap.addMarker((markerOptions).title("Yellow Zone").snippet("${xcases} active cases in ${city}").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))).showInfoWindow()
-                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-                                yellowcheck = 0
-                                citycheck++
+                            if (city == xcity){
+                                if (cases in 1..39){
+                                    yellowcheck = 1
+                                    if (yellowcheck == 1){
+                                        mMap.addMarker((markerOptions).title("Yellow Zone").snippet("${cases} active cases in ${xcity}").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))).showInfoWindow()
+                                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+                                        yellowcheck = 0
+                                        citycheck++
+                                    }
+                                }
+                                else if (cases >= 40){
+                                    redcheck = 1
+                                    if (redcheck == 1){
+                                        mMap.addMarker((markerOptions).title("Red Zone").snippet("${cases} active cases in ${xcity}").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))).showInfoWindow()
+                                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+                                        redcheck = 0
+                                        citycheck++
+                                    }
+                                }
                             }
                         }
                     }
@@ -226,6 +227,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             .addOnFailureListener { exception ->
                 Log.d("errordb", "get failed with ", exception)
             }
+
         mMap.clear()
         citycheck = 0
 
@@ -236,5 +238,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         getLocationAccess()
     }
 
+    private fun getJsonDataFromAsset(fileName: String): JSONArray? {
+        try {
+            val jsonString = assets.open(fileName).bufferedReader().use { it.readText() }
+            return JSONArray(jsonString)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return null
+        }
+    }
 
 }
+
