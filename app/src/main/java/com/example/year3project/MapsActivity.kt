@@ -22,9 +22,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.maps.android.heatmaps.WeightedLatLng
 import org.json.JSONArray
 import java.util.*
+import kotlin.concurrent.schedule
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -45,36 +45,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         else
             ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST)
-    }
-
-    fun onRequestPermissionResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray){
-        if (requestCode == LOCATION_PERMISSION_REQUEST){
-            if(grantResults.contains(PackageManager.PERMISSION_GRANTED)){
-                if (ActivityCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return
-                }
-                mMap.isMyLocationEnabled = true
-            }
-            else{
-                Toast.makeText(this, "User has not granted location access permission.", Toast.LENGTH_LONG).show()
-                finish()
-            }
-        }
-
     }
 
     private fun getLocationUpdates() {
@@ -196,19 +166,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                 if (cases in 1..39){
                                     yellowcheck = 1
                                     if (yellowcheck == 1){
-                                        mMap.addMarker((markerOptions).title("Yellow Zone").snippet("${cases} active cases in ${xcity}").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))).showInfoWindow()
+                                        mMap.addMarker((markerOptions).title("Yellow Zone").snippet("${cases} active cases in ${xcity}").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)))
                                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
                                         yellowcheck = 0
                                         citycheck++
+                                        Timer().schedule(2000) {
+                                            YellowNotificationActivity().show(supportFragmentManager, "MyCustomFragment")
+                                        }
                                     }
                                 }
                                 else if (cases >= 40){
                                     redcheck = 1
                                     if (redcheck == 1){
-                                        mMap.addMarker((markerOptions).title("Red Zone").snippet("${cases} active cases in ${xcity}").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))).showInfoWindow()
+                                        mMap.addMarker((markerOptions).title("Red Zone").snippet("${cases} active cases in ${xcity}").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
                                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
                                         redcheck = 0
                                         citycheck++
+                                        Timer().schedule(2000) {
+                                            RedNotificationActivity().show(supportFragmentManager, "MyCustomFragment")
+                                        }
                                     }
                                 }
                             }
@@ -220,7 +196,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     Log.d("dontexist", "No such document")
                 }
                 if (citycheck == 0){
-                    mMap.addMarker((markerOptions).title("Green Zone").snippet("No active cases in ${city}").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))).showInfoWindow()
+                    mMap.addMarker((markerOptions).title("Green Zone").snippet("No active cases in ${city}").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)))
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
                 }
             }
@@ -249,4 +225,3 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
 }
-

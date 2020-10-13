@@ -46,6 +46,12 @@
         </activity>
         <activity android:name=".LocationActivity" />
         <activity android:name=".StoreDataActivity" />
+        <activity android:name=".HeatmapActivity" />
+        <activity android:name=".RedNotificationActivity"
+            tools:ignore="Instantiatable" />
+        <activity android:name=".YellowNotificationActivity"
+            tools:ignore="Instantiatable" />
+
     </application>
 
 </manifest>
