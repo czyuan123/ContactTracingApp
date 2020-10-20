@@ -27,11 +27,15 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.maps.android.data.geojson.GeoJsonLayer
 import kotlinx.android.synthetic.main.zones.*
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
+import java.util.Calendar.DAY_OF_MONTH
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import kotlin.concurrent.schedule
@@ -163,8 +167,11 @@ class ZonesActivity : FragmentActivity(), OnMapReadyCallback {
         val latLng = LatLng(loc.latitude, loc.longitude)
         val loc: MutableMap<String, Any> = java.util.HashMap()
         loc["Town"] = town
+        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+        val currentDate = sdf.format(Date())
+        loc["Timestamp"] = currentDate
 
-        database.collection("User").document("Location").set(loc)
+        database.collection("Users").document("User ID").collection("Location").add(loc)
         val markerOptions = MarkerOptions().position(latLng)
         val malaysia = HashMap<String, ArrayList<String>>()
         malaysia["Selangor"] = arrayListOf("Sabak Bernam", "Kuala Selangor","Klang","Sepang","Hulu Langat","Hulu Selangor","Gombak","Petaling","Kuala Langat")
