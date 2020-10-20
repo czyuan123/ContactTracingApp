@@ -37,7 +37,7 @@ import kotlin.collections.HashMap
 import kotlin.concurrent.schedule
 
 
-class HeatmapActivity : FragmentActivity(), OnMapReadyCallback {
+class ZonesActivity : FragmentActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private val LOCATION_PERMISSION_REQUEST = 1
@@ -131,7 +131,7 @@ class HeatmapActivity : FragmentActivity(), OnMapReadyCallback {
             val selectStateBuilder = AlertDialog.Builder(this)
             selectStateBuilder.setTitle("Select State")
             selectStateBuilder.setSingleChoiceItems(listStates, -1){
-                dialog, i ->
+                    dialog, i ->
                 Log.d("choice", "${i}")
                 dialog!!.dismiss()
 
@@ -145,7 +145,7 @@ class HeatmapActivity : FragmentActivity(), OnMapReadyCallback {
 
             }
             selectStateBuilder.setNeutralButton("Cancel"){
-                dialog: DialogInterface?, which: Int ->
+                    dialog: DialogInterface?, which: Int ->
                 dialog!!.cancel()
             }
             val stateDialog = selectStateBuilder.create()

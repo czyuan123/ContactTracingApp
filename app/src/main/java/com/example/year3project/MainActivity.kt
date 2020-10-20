@@ -12,26 +12,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        ButtonToLocation.setOnClickListener {
-            startActivity(Intent(this, LocationActivity::class.java))
+        ButtonToZones.setOnClickListener {
+            startActivity(Intent(this, ZonesActivity::class.java))
         }
-
-        ButtonToStoreData.setOnClickListener {
-            startActivity(Intent(this, StoreDataActivity::class.java))
-        }
-
-        ButtonToMaps.setOnClickListener {
-            startActivity(Intent(this, MapsActivity::class.java))
-        }
-
-        ButtonToHeatmap.setOnClickListener {
-            startActivity(Intent(this, HeatmapActivity::class.java))
-        }
-
-        ButtonToReadCity.setOnClickListener {
-            startActivity(Intent(this, ReadCityActivity::class.java))
-        }
-
-
     }
 }
