@@ -59,8 +59,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     val location = locationResult.lastLocation
                     if (location != null) {
                         val latLng = LatLng(location.latitude, location.longitude)
-                        //val markerOptions = MarkerOptions().position(latLng)
-                        //mMap.addMarker((markerOptions).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)))
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
                     }
                 }
@@ -77,18 +75,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return
         }
         fusedLocationClient.requestLocationUpdates(
             locationRequest,
-            //locationCallback,
             null
         )
     }
@@ -96,26 +86,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.maps)
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        database = FirebaseFirestore.getInstance() //2
+        database = FirebaseFirestore.getInstance()
 
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED //1
             && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED)
 
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION), 111)
 
-        lm = getSystemService(Context.LOCATION_SERVICE) as LocationManager //1
+        lm = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         var loclisten = object: LocationListener {
             override fun onLocationChanged(location: Location) {
                 reverseGeocode(location)
             }
         }
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 100.2f, loclisten) //1
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 100.2f, loclisten)
     }
 
     override fun onStart() {
@@ -148,11 +137,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val loc: MutableMap<String, Any> = HashMap()
         loc["Postal Code"] = postcode
         loc["City"] = city
+
         database.collection("User").document("Location").set(loc)
 
-        val docRefUser = database.collection("User").document("Zone")
+        val docRefUser = database.collection("State").document("Selangor")
         docRefUser.get()
             .addOnSuccessListener { document ->
+                Log.d("hihi", "${document.data}")
                 val markerOptions = MarkerOptions().position(latLng)
                 if (document != null) {
                     val jsonData = getJsonDataFromAsset("city_cases.json")

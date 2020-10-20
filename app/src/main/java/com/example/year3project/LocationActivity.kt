@@ -42,6 +42,6 @@ class LocationActivity: AppCompatActivity() {
         var addresses = geoc.getFromLocation(loc.latitude, loc.longitude, 2)
         var address = addresses.get(0)
         textViewLocation.setText("Current location is \n${address.getAddressLine(0)}\n${address.locality}")
-        //textViewLocation.setText("Current location is \n${address.postalCode}")
+        //textViewLocation.setText("Current location is \n${addresses}")
     }
 }

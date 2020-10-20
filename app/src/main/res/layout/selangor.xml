@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:backgroundTint="#FFFFFF"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="0dp"
+        android:layout_height="74dp"
+        android:background="#3F51B5"
+        android:gravity="center"
+        android:text="Selangor Covid-19 Cases"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@id/map_selangor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+    <fragment
+        android:id="@+id/map_selangor"
+        class="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/scrollCases"
+        app:layout_constraintTop_toBottomOf="@id/textView1"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_conversion_absoluteHeight="0dp"
+        tools:layout_conversion_absoluteWidth="0dp" />
+
+    <ScrollView
+        android:id="@+id/scrollCases"
+        android:layout_width="match_parent"
+        android:layout_height="285dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/map_selangor">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="359dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textTotalInSelangor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:text=""
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="60sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textActiveCase"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:text="Active Cases In Selangor"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textSabakBernam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginTop="10dp"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:text="Sabak Bernam: "
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TableLayout
+                android:id="@+id/tableSabakBernam"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:scrollbarAlwaysDrawVerticalTrack="true">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/table_border">
+
+                    <TextView
+                        android:layout_width="250dp"
+                        android:layout_height="35dp"
+                        android:layout_column="0"
+                        android:background="#9DBCCA"
+                        android:gravity="center"
+                        android:text="Town"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="160dp"
+                        android:layout_height="35dp"
+                        android:layout_column="1"
+                        android:background="#8AD9FD"
+                        android:gravity="center"
+                        android:text="Cases"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/textKualaSelangor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginTop="10dp"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:text="Kuala Selangor: "
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TableLayout
+                android:id="@+id/tableKualaSelangor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:scrollbarAlwaysDrawVerticalTrack="true">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/table_border">
+
+                    <TextView
+                        android:layout_width="250dp"
+                        android:layout_height="35dp"
+                        android:layout_column="0"
+                        android:background="#9DBCCA"
+                        android:gravity="center"
+                        android:text="Town"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="160dp"
+                        android:layout_height="35dp"
+                        android:layout_column="1"
+                        android:background="#8AD9FD"
+                        android:gravity="center"
+                        android:text="Cases"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/textKlang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginTop="10dp"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:text="Klang: "
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TableLayout
+                android:id="@+id/tableKlang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:scrollbarAlwaysDrawVerticalTrack="true">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/table_border">
+
+                    <TextView
+                        android:layout_width="250dp"
+                        android:layout_height="35dp"
+                        android:layout_column="0"
+                        android:background="#9DBCCA"
+                        android:gravity="center"
+                        android:text="Town"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="160dp"
+                        android:layout_height="35dp"
+                        android:layout_column="1"
+                        android:background="#8AD9FD"
+                        android:gravity="center"
+                        android:text="Cases"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/textSepang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginTop="10dp"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:text="Sepang: "
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TableLayout
+                android:id="@+id/tableSepang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:scrollbarAlwaysDrawVerticalTrack="true">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/table_border">
+
+                    <TextView
+                        android:layout_width="250dp"
+                        android:layout_height="35dp"
+                        android:layout_column="0"
+                        android:background="#9DBCCA"
+                        android:gravity="center"
+                        android:text="Town"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="160dp"
+                        android:layout_height="35dp"
+                        android:layout_column="1"
+                        android:background="#8AD9FD"
+                        android:gravity="center"
+                        android:text="Cases"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/textHuluLangat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginTop="10dp"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:text="Hulu Langat: "
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TableLayout
+                android:id="@+id/tableHuluLangat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:scrollbarAlwaysDrawVerticalTrack="true">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/table_border">
+
+                    <TextView
+                        android:layout_width="250dp"
+                        android:layout_height="35dp"
+                        android:layout_column="0"
+                        android:background="#9DBCCA"
+                        android:gravity="center"
+                        android:text="Town"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="160dp"
+                        android:layout_height="35dp"
+                        android:layout_column="1"
+                        android:background="#8AD9FD"
+                        android:gravity="center"
+                        android:text="Cases"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/textHuluSelangor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginTop="10dp"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:text="Hulu Selangor: "
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TableLayout
+                android:id="@+id/tableHuluSelangor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:scrollbarAlwaysDrawVerticalTrack="true">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/table_border">
+
+                    <TextView
+                        android:layout_width="250dp"
+                        android:layout_height="35dp"
+                        android:layout_column="0"
+                        android:background="#9DBCCA"
+                        android:gravity="center"
+                        android:text="Town"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="160dp"
+                        android:layout_height="35dp"
+                        android:layout_column="1"
+                        android:background="#8AD9FD"
+                        android:gravity="center"
+                        android:text="Cases"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/textGombak"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginTop="10dp"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:text="Gombak: "
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TableLayout
+                android:id="@+id/tableGombak"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:scrollbarAlwaysDrawVerticalTrack="true">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/table_border">
+
+                    <TextView
+                        android:layout_width="250dp"
+                        android:layout_height="35dp"
+                        android:layout_column="0"
+                        android:background="#9DBCCA"
+                        android:gravity="center"
+                        android:text="Town"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="160dp"
+                        android:layout_height="35dp"
+                        android:layout_column="1"
+                        android:background="#8AD9FD"
+                        android:gravity="center"
+                        android:text="Cases"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/textPetaling"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginTop="10dp"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:text="Petaling: "
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TableLayout
+                android:id="@+id/tablePetaling"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:scrollbarAlwaysDrawVerticalTrack="true">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/table_border">
+
+                    <TextView
+                        android:layout_width="250dp"
+                        android:layout_height="35dp"
+                        android:layout_column="0"
+                        android:background="#9DBCCA"
+                        android:gravity="center"
+                        android:text="Town"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="160dp"
+                        android:layout_height="35dp"
+                        android:layout_column="1"
+                        android:background="#8AD9FD"
+                        android:gravity="center"
+                        android:text="Cases"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/textKualaLangat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginTop="10dp"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:text="Kuala Langat: "
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TableLayout
+                android:id="@+id/tableKualaLangat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:scrollbarAlwaysDrawVerticalTrack="true">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/table_border">
+
+                    <TextView
+                        android:layout_width="250dp"
+                        android:layout_height="35dp"
+                        android:layout_column="0"
+                        android:background="#9DBCCA"
+                        android:gravity="center"
+                        android:text="Town"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="160dp"
+                        android:layout_height="35dp"
+                        android:layout_column="1"
+                        android:background="#8AD9FD"
+                        android:gravity="center"
+                        android:text="Cases"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+                </TableRow>
+            </TableLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

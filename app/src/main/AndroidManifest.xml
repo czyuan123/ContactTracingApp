@@ -47,10 +47,13 @@
         <activity android:name=".LocationActivity" />
         <activity android:name=".StoreDataActivity" />
         <activity android:name=".HeatmapActivity" />
+        <activity android:name=".ReadCityActivity" />
         <activity android:name=".RedNotificationActivity"
             tools:ignore="Instantiatable" />
         <activity android:name=".YellowNotificationActivity"
             tools:ignore="Instantiatable" />
+        <activity android:name=".SelangorActivity" />
+        <activity android:name=".MelakaActivity" />
 
     </application>
 
